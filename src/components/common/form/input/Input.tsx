@@ -1,21 +1,12 @@
 import { Input as BaseInput, InputProps } from 'antd';
 import styled from 'styled-components';
-import {
-  Controller,
-  useController,
-  useFormContext,
-  UseFormProps,
-} from 'react-hook-form';
+import { Controller, useController, useFormContext, UseFormProps } from 'react-hook-form';
 import { FC, ReactNode } from 'react';
-const { TextArea } = BaseInput;
 
 const FormControl = styled.div`
   position: relative;
-  /* max-width: 400px; */
   width: 100%;
   margin-bottom: 15px;
-  /* .ant-input {
-  } */
   &.has-icon {
     & > input {
       padding-left: 80px;
@@ -42,10 +33,6 @@ const InputStyled = styled(BaseInput)`
     border-color: ${({ theme }) => theme.primary};
     box-shadow: 0 0 0 2px rgba(106, 152, 60, 0.1);
   }
-`;
-const TextAreaStyled = styled(TextArea)`
-  height: auto;
-  width: 100%;
 `;
 
 const LabelStyled = styled.label`
@@ -80,54 +67,33 @@ type IProps = InputProps &
     name: string;
     labelName?: string;
     icon?: ReactNode;
-    type?: string;
   };
 
-const Input: FC<IProps> = ({
-  icon,
-  labelName,
-  name,
-  type,
-  ...props
-}) => {
+const Input: FC<IProps> = ({ icon, labelName, name, ...props }) => {
   const { control } = useFormContext();
   const {
-    fieldState: { error },
+    fieldState: { error }
   } = useController({ name, control });
   return (
     <>
       <FormControl>
-        <LabelStyled htmlFor={name}>
-          {labelName}
-        </LabelStyled>
+        {/* <LabelStyled htmlFor={name}>{labelName}</LabelStyled> */}
+        {labelName && <LabelStyled htmlFor={name}>{labelName}</LabelStyled>}
+
         <Controller
           name={name}
           control={control}
-          defaultValue=""
+          defaultValue=''
           render={({ field }) => (
             <>
-              {type !== 'textarea' ? (
-                <InputStyled
-                  id={name}
-                  {...field}
-                  type={type}
-                  {...props}
-                />
-              ) : (
-                <TextAreaStyled
-                  id={name}
-                  {...field}
-                  type={type}
-                  {...props}
-                />
-              )}
+              <InputStyled id={name} {...field} {...props} />
               {icon && <IconStyled>{icon}</IconStyled>}
             </>
           )}
         />
       </FormControl>
 
-      {error?.message && ( // Kiểm tra xem error và error.message có tồn tại
+      {error?.message && (
         <ErrorStyled>
           {error.message.split('|').map((err) => (
             <span key={err} style={{ display: 'block' }}>

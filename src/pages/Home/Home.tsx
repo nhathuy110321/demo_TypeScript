@@ -1,4 +1,11 @@
 import styled from 'styled-components';
+import { About, Banner, CategoryBar, HeaderSearch, HorizontalCategory } from './components';
+import { useDispatch, useSelector } from 'react-redux';
+import ListProduct from '../../components/listProduct/ListProduct';
+import { useEffect, useState } from 'react';
+import { RootState } from '../../store/rootReducer';
+import { fetchRequest } from '../../saga/Products/Products.Action';
+import Pagination from '../../components/pagination/Pagination';
 
 const HomeMain = styled.div`
   display: grid;
@@ -13,10 +20,30 @@ const MainContentStyled = styled.div`
   }
 `;
 const Home = () => {
+  const dispatch = useDispatch();
+  const product = useSelector((state: RootState) => state.product);
+  const [page, setPage] = useState(1);
+
+  useEffect(() => {
+    dispatch(fetchRequest({ ...product.params, page }));
+  }, [page]);
   return (
     <>
+      <HeaderSearch />
+      <HorizontalCategory />
+      <About />
+      <Banner />
       <HomeMain>
-        <MainContentStyled></MainContentStyled>
+        <CategoryBar />
+        <MainContentStyled>
+          <ListProduct products={product.products} />
+          <Pagination
+            total={product.pagination.totalProducts}
+            onChange={(value: any) => setPage(value)}
+            current={product.pagination.currentPage}
+            pageSize={product.params.limit}
+          />
+        </MainContentStyled>
       </HomeMain>
     </>
   );

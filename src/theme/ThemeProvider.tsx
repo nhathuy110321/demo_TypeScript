@@ -4,12 +4,8 @@ import theme from './theme';
 
 interface IProps {}
 
-export const ThemeProvider: FC<
-  PropsWithChildren<IProps>
-> = ({ children }) => {
+export const ThemeProvider: FC<PropsWithChildren<IProps>> = ({ children }) => {
   return (
-    <OriginalThemeProvider theme={theme}>
-      {children}
-    </OriginalThemeProvider>
+    <OriginalThemeProvider theme={theme}>{children}</OriginalThemeProvider>
   );
 };

@@ -5,8 +5,8 @@ const publicRoutes = [
   {
     path: '/',
     element: Home,
-    layout: DefaultLayout,
-  },
+    layout: DefaultLayout
+  }
 ];
 
 export default publicRoutes;
