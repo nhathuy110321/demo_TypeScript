@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { fetchRequest } from '../../../../saga/Products/Products.Action';
+import { RootState } from '../../../../store/rootReducer';
 
 const StyledHorizontalCategory = styled.div`
   display: flex;
@@ -14,39 +17,54 @@ const LinkStyled = styled.a`
   font-weight: 700;
   cursor: pointer;
 `;
-const categorys = [
+enum Type {
+  ALL = '',
+  KEYBOARD = 'keyboard',
+  KEYCAP = 'keycap',
+  SWITCH = 'switch'
+}
+interface ICategoryMenu {
+  type: Type;
+  categoryName: string;
+}
+
+const categorys: ICategoryMenu[] = [
   {
-    label: 'ALL',
-    value: '',
+    type: Type.ALL,
+    categoryName: 'Tất cả'
   },
   {
-    label: 'BÀN PHÌM CƠ',
-    value: 'keyboard',
+    type: Type.KEYBOARD,
+    categoryName: 'Keyboard'
   },
   {
-    label: 'KEYCAP',
-    value: 'keycap',
+    type: Type.KEYCAP,
+    categoryName: 'Keycap'
   },
   {
-    label: 'SWITCH',
-    value: 'switch',
-  },
+    type: Type.SWITCH,
+    categoryName: 'Switch'
+  }
 ];
 const HorizontalCategory = () => {
-  //   const dispatch = useDispatch();
-  //   const params = useSelector((state) => state.product.params);
+  const dispatch = useDispatch();
+  const params = useSelector((state: RootState) => state.product.params);
+  const [activeCategory, setActiveCategory] = useState('');
 
-  //   const handleFilterByCategory = (value) => {
-  //     dispatch(fetchRequest({ ...params, category: value }));
-  //   };
+  const handleFilterByCategory = (type: Type) => {
+    setActiveCategory(type);
+    dispatch(fetchRequest({ ...params, category: type }));
+  };
+
   return (
     <StyledHorizontalCategory>
       {categorys.map((item) => (
         <LinkStyled
-          key={item.value}
-          //   onClick={() => handleFilterByCategory(item.value)}
+          key={item.type}
+          onClick={() => handleFilterByCategory(item.type)}
+          className={`hover-link ${activeCategory === item.type ? 'active' : ''}`}
         >
-          {item.label}
+          {item.categoryName}
         </LinkStyled>
       ))}
     </StyledHorizontalCategory>

@@ -1,10 +1,6 @@
 import React, { FC } from 'react';
 import { Radio as BaseRadio, RadioGroupProps } from 'antd';
-import {
-  Controller,
-  useController,
-  useFormContext,
-} from 'react-hook-form';
+import { Controller, useController, useFormContext } from 'react-hook-form';
 import styled from 'styled-components';
 
 const RadioStyled = styled(BaseRadio)`
@@ -17,16 +13,13 @@ const RadioStyled = styled(BaseRadio)`
   }
 
   .ant-radio-checked .ant-radio-inner {
-    border-color: ${({ theme }) =>
-      theme.primary} !important;
-    background-color: ${({ theme }) =>
-      theme.primary} !important;
+    border-color: ${({ theme }) => theme.primary} !important;
+    background-color: ${({ theme }) => theme.primary} !important;
   }
 
   &:hover {
     .ant-radio-inner {
-      border-color: ${({ theme }) =>
-        theme.primary} !important;
+      border-color: ${({ theme }) => theme.primary} !important;
     }
   }
 `;
@@ -46,15 +39,10 @@ interface IProps extends RadioGroupProps {
   options: IOptions[];
 }
 
-const Radio: FC<IProps> = ({
-  options,
-  name,
-  defaultValue,
-  ...props
-}) => {
+const Radio: FC<IProps> = ({ options, name, defaultValue, ...props }) => {
   const { control } = useFormContext();
   const {
-    fieldState: { error },
+    fieldState: { error }
   } = useController({ name, control });
   return (
     <div>
@@ -64,20 +52,14 @@ const Radio: FC<IProps> = ({
         render={({ field }) => (
           <BaseRadio.Group {...field} {...props}>
             {options.map((option) => (
-              <RadioStyled
-                key={option.value}
-                value={option.value}
-                defaultChecked={defaultValue}
-              >
+              <RadioStyled key={option.value} value={option.value} defaultChecked={defaultValue}>
                 {option.label}
               </RadioStyled>
             ))}
           </BaseRadio.Group>
         )}
       />
-      {!!error && (
-        <ErrorStyled>{error.message}</ErrorStyled>
-      )}
+      {!!error && <ErrorStyled>{error.message}</ErrorStyled>}
     </div>
   );
 };

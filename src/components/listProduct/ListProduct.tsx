@@ -1,14 +1,19 @@
 import styled from 'styled-components';
-import { Button } from '../common';
-import ProductCard from '../productCard/ProductCard';
-import IProduct from '../../types/product';
 import { FC, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import Input from '../common/form/input/Input';
-import { IFormModalProduct } from '../../types/modal';
 import { useDispatch } from 'react-redux';
+
+import ProductCard from '../productCard/ProductCard';
+import IProduct from '../../types/product';
+
 import Modal, { IModalProps } from '../Modal/Modal';
+import { IFormModalProduct } from '../../types/modal';
+
 import { patchRequest } from '../../saga/Products/Products.Action';
+
+import Input from '../common/form/input/Input';
+import { Button } from '../common';
+import Textarea from '../common/form/textArea/Textarea';
 
 const ProductListStyled = styled.div`
   display: grid;
@@ -25,15 +30,15 @@ const AddCardStyled = styled.div`
     height: auto;
   }
 `;
-const LabelStyled = styled.label`
-  display: inline-block;
-  font-size: 18px;
-  line-height: 24px;
-  font-weight: 500;
-  margin-bottom: 10px;
+// const LabelStyled = styled.label`
+//   display: inline-block;
+//   font-size: 18px;
+//   line-height: 24px;
+//   font-weight: 500;
+//   margin-bottom: 10px;
 
-  color: ${({ theme }) => theme.textPrimary};
-`;
+//   color: ${({ theme }) => theme.textPrimary};
+// `;
 const FormUpdateStyled = styled.div`
   .ant-input {
     width: 100% !important;
@@ -75,10 +80,7 @@ const ListProduct: FC<IProps> = ({ products }) => {
             <Input name={'title'} labelName={'title:'} />
             <Input name={'price'} labelName={'Price:'} />
             <Input name={'likedCount'} labelName={'Liked Count:'} />
-            <>
-              <LabelStyled htmlFor='description'>Description:</LabelStyled>
-              <Input id='description' name={'description'} />
-            </>
+            <Textarea name={'descreption'} labelName={'description'} />
             <Input name={'username'} labelName={'username:'} />
           </FormUpdateStyled>
         </FormProvider>

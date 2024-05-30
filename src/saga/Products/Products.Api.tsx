@@ -1,7 +1,7 @@
 import AxiosRequest from '../../API/Axios';
 
 import IProduct from '../../types/product';
-import { IProductParams, IResponse } from '../../types/common';
+import { IProductParams } from '../../types/common';
 
 const Home_API = {
   fetch: async (params: IProductParams) => {
@@ -18,7 +18,11 @@ const Home_API = {
     const { _id, ...data } = payload;
     return await AxiosRequest.patch(`product/update/${_id}`, { ...data });
   },
-  delete: async (_id: string): Promise<IResponse<IProduct>> => {
+  // delete: async (_id: string): Promise<IResponse<IProduct>> => {
+  //   return await AxiosRequest.delete(`product/delete/${_id}`);
+  // }
+
+  delete: async (_id: string) => {
     return await AxiosRequest.delete(`product/delete/${_id}`);
   }
 };

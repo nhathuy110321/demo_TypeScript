@@ -13,7 +13,7 @@ import {
   DescrioptionStyled,
   FavouriteStyled,
   FormUpdateStyled,
-  LabelStyled,
+  // LabelStyled,
   ProductNameStyled,
   QuantityCount,
   QuantityImgStyled,
@@ -31,6 +31,7 @@ import { IFormModalProduct } from '../../types/modal';
 import Modal, { IModalProps } from '../Modal/Modal';
 
 import { deleteRequest, patchRequest } from '../../saga/Products/Products.Action';
+import Textarea from '../common/form/textArea/Textarea';
 
 // import { useDispatch } from 'react-redux'
 
@@ -69,18 +70,10 @@ const ProductCard: FC<IProductCardProps> = ({ product }) => {
       content: (
         <FormProvider {...methodsModalEdit}>
           <FormUpdateStyled>
-            <>
-              <LabelStyled htmlFor='imageUrl'>ImageUrl:</LabelStyled>
-              <Input name={'imageUrl'} />
-            </>
-            <>
-              <LabelStyled htmlFor='title'>Title:</LabelStyled>
-              <Input name={'title'} />
-            </>
-            <>
-              <LabelStyled htmlFor='description'>Description:</LabelStyled>
-              <Input id='description' name={'description'} />
-            </>
+            <Input name={'imageUrl'} labelName={'imageUrl'} />
+            <Input name={'title'} labelName={'Title'} />
+
+            <Textarea name={'description'} labelName={'Description'} />
           </FormUpdateStyled>
         </FormProvider>
       ),

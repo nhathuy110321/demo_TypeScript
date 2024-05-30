@@ -42,11 +42,12 @@ a {
   &:hover::after {
     transform: scaleX(1);
   }
+ 
 }
 .hover-link {
   transition: all 0.2s linear;
-
   &:hover, &.active {
+
     color: ${({ theme }) => theme.primary};
   }
 }
